@@ -1,0 +1,57 @@
+<template>
+</template>
+
+<script>
+import shopCart from './shopCart.vue'
+
+export default {
+  name: 'shopCartButton',
+  data(){ 
+      return{
+        itemsInCart: 0,
+        show: false
+      }
+    },
+    methods:{
+      showCart(){
+        this.show = (!this.show);
+      }
+    },
+      components: {
+    shopCart
+  }
+}
+</script>
+
+<style scoped>
+.cartButton{
+  background-color: #424242;
+  position:fixed;
+  right:1em;
+  width:6em;
+  height:6em;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  border-radius: 100%;
+}
+.cartButton img{
+  width:60%;
+  height:60%;
+}
+.itemsInCart{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  position:absolute;
+  height:25%;
+  width:25%;
+
+  border-radius: 100%;
+  border: 1px solid white;
+  left:0;
+  top:0;
+  background-color: #424242;
+  color:white;
+}
+</style>

@@ -1,28 +1,55 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <shopCartButton @toogleShopShopCart="showShopCart = !showShopCart"/>
+      <shopCart v-if="showShopCart"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import shopCartButton from './components/shopCartButton.vue'
+import shopCart from './components/shopCart.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    shopCartButton,
+    shopCart
+  },
+  data () {
+    return {
+      info: null,
+      showShopCart: false
+    }
+  },
+  methods:{
+    toogleShopShopCart(){
+      this.showShopCart = !showShopCart;
+    }
+  },
+  mounted () {
+
+fetch("https://swapi.dev/api/starships/", {
+    "method": "GET",
+})
+.then(response => { 
+    if(response.ok){
+        return response.json()    
+    } else{
+        alert("Server returned " + response.status + " : " + response.statusText);
+    }                
+})
+.then(response => {
+  console.log(response)
+  console.log(response.body)
+    this.info = response; 
+})
+.catch(err => {
+    console.log(err);
+});
   }
 }
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
