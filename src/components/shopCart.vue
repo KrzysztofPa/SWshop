@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div class="mainWrapper" v-for="ship in shipList" :key="ship.name">
-      <div class="shipWrapper"></div>
-    </div>
+  <div class="cart">
+    KURWA
   </div>
 </template>
 
@@ -18,8 +16,11 @@ export default {
 </script>
 
 <style scoped>
-.mainWrapper {
-  display: grid;
+.cart {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: red;
 }
 .shipWrapper {
   border: 1px solid white;
