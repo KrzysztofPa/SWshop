@@ -8,13 +8,13 @@
           {{ ship.cost_in_credits }}
         </p>
         <div class="addToCartWrapper" v-if="ship.cost_in_credits !== 'unknown'">
-          <input type="number" min="0" />
+          <input type="number" min="0" value="1"/>
           <button
             @click="
               addToCart(
                 ship.name,
                 ship.cost_in_credits,
-                $event.target.parentElement.children[0].value
+                parseInt($event.target.parentElement.children[0].value)
               )
             "
           >
@@ -38,12 +38,13 @@ export default {
     return { orderList: [] };
   },
   methods: {
-    addToCart(name, price, number) {
-      function item(name, price, number) {
-        (this.name = name), (this.price = price), (this.number = number);
+    addToCart(name, price, quantity) {
+      function item(name, price, quantity) {
+        (this.name = name), (this.price = price), (this.quantity = quantity);
       }
-      if (number > 0) {
-        this.orderList.push(new item(name, price, number));
+      if (quantity > 0) {
+        let obj = this.orderList.find(o => o.name === name);
+        obj? obj.quantity += quantity: this.orderList.push(new item(name, price, quantity));
         this.$emit("addOrderToCart", this.orderList);
       }
     },

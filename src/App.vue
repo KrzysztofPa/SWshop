@@ -5,7 +5,9 @@
       :shipList="shipList.results"
       @addOrderToCart="addOrderToCart"
     />
-    <shopCart v-if="showShopCart" />
+    <transition name="fade">
+    <shopCart v-if="showShopCart" :shipList="orderList" />
+      </transition>
   </div>
 </template>
 
@@ -48,4 +50,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>

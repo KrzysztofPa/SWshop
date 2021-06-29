@@ -1,6 +1,13 @@
 <template>
   <div class="cart">
-    KURWA
+    <p>CART</p>
+    <ul>
+      <li v-for="item in shipList" :key="item.name">
+        {{item.name}}
+        {{item.price}}
+        {{item.quantity}}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -18,11 +25,18 @@ export default {
 <style scoped>
 .cart {
   position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: red;
+  right:0;
+  top:0;
+  height: 100vh;
+  min-width: 300px;
+  background-color: #272727;
+  border-left: 1px solid white;
 }
 .shipWrapper {
   border: 1px solid white;
+}
+
+ul{
+  list-style: none;
 }
 </style>
