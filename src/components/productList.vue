@@ -1,19 +1,19 @@
 <template>
   <div>
     <ul class="mainWrapper">
-      <li class="shipWrapper" v-for="ship in shipList" :key="ship.name">
+      <li class="shipWrapper" v-for="ship in data" :key="ship.name">
         <p class="shipName">{{ ship.name }}</p>
         <p class="shipManufacturer">{{ ship.manufacturer }}</p>
         <p class="shipCost" v-if="ship.cost_in_credits !== 'unknown'">
           {{ ship.cost_in_credits }}
         </p>
         <div class="addToCartWrapper" v-if="ship.cost_in_credits !== 'unknown'">
-          <input type="number" min="0" value="1"/>
+          <input type="number" min="0" value="1" />
           <button
             @click="
               addToCart(
                 ship.name,
-                ship.cost_in_credits,
+                parseInt(ship.cost_in_credits),
                 parseInt($event.target.parentElement.children[0].value)
               )
             "
@@ -33,7 +33,7 @@
 <script>
 export default {
   name: "productList",
-  props: ["shipList"],
+  props: ["data"],
   data() {
     return { orderList: [] };
   },
@@ -43,8 +43,10 @@ export default {
         (this.name = name), (this.price = price), (this.quantity = quantity);
       }
       if (quantity > 0) {
-        let obj = this.orderList.find(o => o.name === name);
-        obj? obj.quantity += quantity: this.orderList.push(new item(name, price, quantity));
+        let obj = this.orderList.find((o) => o.name === name);
+        obj
+          ? (obj.quantity += quantity)
+          : this.orderList.push(new item(name, price, quantity));
         this.$emit("addOrderToCart", this.orderList);
       }
     },

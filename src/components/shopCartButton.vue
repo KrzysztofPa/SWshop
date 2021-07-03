@@ -35,8 +35,8 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  z-index: 100;
-  }
+  z-index: 5;
+}
 .cartButton img {
   width: 60%;
   height: 60%;

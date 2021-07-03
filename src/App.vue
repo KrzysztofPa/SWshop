@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <shopCartButton @toogleShopShopCart="showShopCart = !showShopCart" />
-    <productList
-      :shipList="shipList.results"
-      @addOrderToCart="addOrderToCart"
+    <productList :data="data.results" @addOrderToCart="addOrderToCart" />
+    <shopCart
+      v-if="showShopCart"
+      :data="orderList"
+      @hideCart="showShopCart = false"
     />
-    <transition name="fade">
-    <shopCart v-if="showShopCart" :shipList="orderList" />
-      </transition>
   </div>
 </template>
 
@@ -15,6 +14,7 @@
 import shopCartButton from "./components/shopCartButton.vue";
 import shopCart from "./components/shopCart.vue";
 import productList from "./components/productList.vue";
+import apiQuery from "./components/apiQuery.js";
 
 export default {
   name: "App",
@@ -26,35 +26,27 @@ export default {
 
   data() {
     return {
-      shipList: [],
+      data: [],
       orderList: [],
       showShopCart: false,
+      apiLink: "https://swapi.dev/api/starships/?page=1",
     };
   },
   methods: {
     addOrderToCart(newOrderList) {
       this.orderList = newOrderList;
     },
+    async checkApi(apiLink) {
+      this.data = await apiQuery(apiLink);
+    },
   },
   mounted() {
-    fetch("https://swapi.dev/api/starships/", {
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        this.shipList = response;
-      });
+    this.checkApi(this.apiLink);
+  },
+  updated() {
+    this.checkApi(this.apiLink);
   },
 };
 </script>
 
-<style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-</style>
+<style></style>
