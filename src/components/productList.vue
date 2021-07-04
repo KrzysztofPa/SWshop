@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="productList">
     <ul class="mainWrapper">
-      <li class="shipWrapper" v-for="ship in data" :key="ship.name">
-        <p class="shipName">{{ ship.name }}</p>
-        <p class="shipManufacturer">{{ ship.manufacturer }}</p>
-        <p class="shipCost" v-if="ship.cost_in_credits !== 'unknown'">
+      <li class="productWrapper" v-for="ship in data" :key="ship.name">
+        <p class="productName">{{ ship.name }}</p>
+        <p class="productManufacturer">{{ ship.manufacturer }}</p>
+        <p class="productCost" v-if="ship.cost_in_credits !== 'unknown'">
           {{ ship.cost_in_credits }}
         </p>
         <div class="addToCartWrapper" v-if="ship.cost_in_credits !== 'unknown'">
@@ -55,29 +55,34 @@ export default {
 </script>
 
 <style scoped>
+.productList {
+  width: 90%;
+  margin: 0 auto;
+}
 .mainWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
   grid-gap: 1rem;
   list-style: none;
   padding: 0;
-  margin: 10% 2em;
 }
-.shipWrapper {
+.productWrapper {
   border: 1px solid white;
   text-align: center;
   background-color: #272727;
+  min-height: 13rem;
 }
-.shipName {
+.productName {
   margin: 1em 0;
   font-weight: bold;
   font-size: 1.2rem;
 }
-.shipManufacturer {
+.productManufacturer {
   font-style: italic;
   font-size: 0.8rem;
 }
-.shipCost {
+.productCost {
   font-size: 1.1em;
   color: blanchedalmond;
 }
@@ -99,7 +104,7 @@ button img {
   width: 1em;
   height: 1em;
 }
-.shipCost::after {
+.productCost::after {
   background-image: url("../assets/coin.webp");
   background-size: 1em 1em;
   display: inline-block;

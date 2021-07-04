@@ -8,12 +8,17 @@
       <li class="cartEl" v-for="item in data" :key="item.name">
         <p class="itemName">{{ item.name }}</p>
         <div class="itemCenter">
-          <span class="shipCost"> {{ item.price }}</span>
+          <span class="productCost"> {{ item.price }}</span>
           <span>
             <button class="minusQuantity" @click="minusQuantity(item.name)">
               -
             </button>
-            <input type="text" class="quantity" v-model="item.quantity" />
+            <input
+              type="number"
+              class="quantity"
+              v-model.lazy="item.quantity"
+              @change="checkValue(item.name)"
+            />
             <button class="plusQuantity" @click="plusQuantity(item.name)">
               +
             </button>
@@ -42,9 +47,18 @@ export default {
     minusQuantity(e) {
       for (let i = 0; i < this.data.length; i++) {
         if (e === this.data[i].name) {
-          this.data[i].quantity === 1
+          this.data[i].quantity <= 1
             ? this.data.splice(i, 1)
             : this.data[i].quantity--;
+        }
+      }
+    },
+    checkValue(e) {
+      for (let i = 0; i < this.data.length; i++) {
+        if (e === this.data[i].name) {
+          this.data[i].quantity <= 0
+            ? this.data.splice(i, 1)
+            : this.data[i].quantity;
         }
       }
     },
@@ -82,7 +96,7 @@ export default {
   opacity: 0.95;
   overflow: auto;
 }
-.shipWrapper {
+.productWrapper {
   border: 1px solid white;
 }
 
@@ -128,6 +142,14 @@ p {
   text-align: center;
   font-size: 1.2rem;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 .plusQuantity,
 .minusQuantity {
   font-size: 1.2rem;
@@ -146,7 +168,7 @@ p {
   margin: 0 1rem;
 }
 
-.shipCost::after,
+.productCost::after,
 .subtotal::after {
   margin-left: 0.2rem;
   background-image: url("../assets/coin.webp");
@@ -180,7 +202,7 @@ p {
   padding: 0.3rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   .cart {
     width: 100%;
   }

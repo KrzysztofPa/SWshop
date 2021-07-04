@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <shopCartButton @toogleShopShopCart="showShopCart = !showShopCart" />
-    <productList :data="data.results" @addOrderToCart="addOrderToCart" />
+    <productList :data="data.results" @addOrderToCart="addOrderToCart">
+    </productList>
     <shopCart
       v-if="showShopCart"
       :data="orderList"
@@ -44,15 +45,21 @@ export default {
     },
     changePage(link) {
       this.apiLink = link;
+      this.checkApi(this.apiLink);
     },
   },
   mounted() {
     this.checkApi(this.apiLink);
   },
-  updated() {
-    this.checkApi(this.apiLink);
-  },
 };
 </script>
 
-<style></style>
+<style>
+#app {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+</style>
