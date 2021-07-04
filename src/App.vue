@@ -7,6 +7,7 @@
       :data="orderList"
       @hideCart="showShopCart = false"
     />
+    <changePage :data="data" :apiLink="apiLink" @changePage="changePage" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 import shopCartButton from "./components/shopCartButton.vue";
 import shopCart from "./components/shopCart.vue";
 import productList from "./components/productList.vue";
+import changePage from "./components/changePage.vue";
 import apiQuery from "./components/apiQuery.js";
 
 export default {
@@ -22,6 +24,7 @@ export default {
     shopCartButton,
     shopCart,
     productList,
+    changePage,
   },
 
   data() {
@@ -38,6 +41,9 @@ export default {
     },
     async checkApi(apiLink) {
       this.data = await apiQuery(apiLink);
+    },
+    changePage(link) {
+      this.apiLink = link;
     },
   },
   mounted() {
